@@ -7,6 +7,28 @@
         <link rel="stylesheet" href="styling.css">
     </head>
     <body>
-        
+        <section id="page">
+            <div id="header">
+                <div id="headline">
+                    <h1>Äänestyssovellus</h1>
+                </div>
+                <div class="logging" id="loginruutu">
+                    <input type="password" id="adminword" placeholder="salainen sana">
+                    <input type="submit" id="login" onclick="login()" value="Kirjaudu">
+                </div>
+                <div class="logging" id="logoutruutu" style="display:none">
+                    <input type="submit" id="logout" onclick="logout()" value="Kirjaudu ulos">
+                </div>
+
+            </div>
+
+            <div id="votes">
+
+            </div>
+        </section>
+        <footer>
+            <p class="footertext">© Juho Riipinen TiVi21A</p>
+        </footer>
+        <script src="script.js"></script>
     </body>
 </html>

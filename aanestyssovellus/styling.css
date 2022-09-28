@@ -131,3 +131,9 @@ footer {
         margin-left: 10px;
     }
 }
+
+.createVote {
+    width:500px;
+    border-radius: 10px;
+    border-color: white;
+}

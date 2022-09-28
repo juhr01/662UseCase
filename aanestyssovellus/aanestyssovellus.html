@@ -23,12 +23,15 @@
         <div id="content">
         
             <div id="controls">
-                <input type="submit" id="create" value="+" onclick="createVote()">
-                <input type="submit" id="delete" value="-" onclick="deleteVote()">
+                <input type="submit" id="create" value="+" onclick="createVote()" style="display:none">
+                <input type="submit" id="delete" value="-" onclick="deleteVote()" style="display:none">
             </div>
 
             <div id="votes">
-
+                <div lass="createVote" id="createVote">
+                    <button class="createVote" id="exitBtn">Poistu</button>
+                    <button></button>
+                </div>
             </div>
         </div>
     </section>

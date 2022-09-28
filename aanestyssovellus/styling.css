@@ -33,7 +33,7 @@ body {
 
 .logging {
     position:absolute;
-    top:50px;
+    top:60px;
     right:20px;
     float:right;
 }
@@ -122,4 +122,12 @@ footer {
 #delete:hover {
     color: white;
     border-color: white;
+}
+
+@media screen and (max-width: 665px) {
+    #headline {
+        font-size:1.2em;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
 }

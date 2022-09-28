@@ -7,25 +7,31 @@
         <link rel="stylesheet" href="styling.css">
     </head>
     <body>
+        <div id="header">
+            <div id="headline">
+                <h1>Äänestyssovellus</h1>
+            </div>
+            <div class="logging" id="logging">
+                <label for="adminword" id="logginglabel">Kirjautuminen: </label>
+                <input type="password" id="adminword" placeholder="salainen sana">
+                <input type="submit" id="login" onclick="login()" value="Kirjaudu">
+                <p id="kirjautuneena" style="display:none">Kirjautuneena ylläpitäjänä</p>
+                <input type="submit" id="logout" onclick="logout()" value="Kirjaudu ulos" style="display: none">
+            </div>
+        </div>
         <section id="page">
-            <div id="header">
-                <div id="headline">
-                    <h1>Äänestyssovellus</h1>
-                </div>
-                <div class="logging" id="logging">
-                    <label for="adminword" id="logginglabel">Kirjautuminen: </label>
-                    <input type="password" id="adminword" placeholder="salainen sana">
-                    <input type="submit" id="login" onclick="login()" value="Kirjaudu">
-                    <p id="kirjautuneena" style="display:none">Kirjautuneena ylläpitäjänä</p>
-                    <input type="submit" id="logout" onclick="logout()" value="Kirjaudu ulos" style="display: none">
-                </div>
-
+        <div id="content">
+        
+            <div id="controls">
+                <input type="submit" id="create" value="+" onclick="createVote()">
+                <input type="submit" id="delete" value="-" onclick="deleteVote()">
             </div>
 
             <div id="votes">
 
             </div>
-        </section>
+        </div>
+    </section>
         <footer>
             <p class="footertext">© Juho Riipinen TiVi21A</p>
         </footer>

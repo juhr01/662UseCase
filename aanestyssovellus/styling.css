@@ -9,9 +9,8 @@ body {
     height: auto;
     overflow-x: hidden ;
     background-image: url('tausta.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
     color:white;
+    line-height: 1.6;
 }
 
 #header {
@@ -39,6 +38,13 @@ body {
 }
 
 #login {
+    border-radius: 10px;
+    height:30px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#logout {
     border-radius: 10px;
     height:30px;
     padding-left: 5px;
@@ -89,18 +95,18 @@ footer {
   }
 
   .controlBtn {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     padding-left: 30px;
     padding-right: 30px;
     margin: 10px;
     border-radius: 10px;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1.2em;
   }
 
 #create {
-    background-color: green;
+    background-color: rgb(205, 255, 209);
 
 }
 
@@ -118,14 +124,11 @@ footer {
 
 #controls {
     width:100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    text-align: center;
 }
 
 #create:hover {
-    color: white;
-    border-color: white;
+    background-color: rgb(79, 192, 88);
 }
 
 #delete:hover {
@@ -144,13 +147,13 @@ footer {
 .createVote {
     display:flex;
     flex-direction: column;
-    position: absolute;
-    width:400px;
+    width: 100%;
     border-radius: 10px;
     border: 2px solid white;
-    line-height: 60px;
     background-color: #1a1a1a;
-    margin-top: 10px;
+    margin-top: 30px;
+    padding-top: 10px;
+    padding-bottom:10px;
 
 }
 
@@ -165,27 +168,42 @@ footer {
 }
 
 #exitCreate {
+    margin-bottom:10px;
     width: 100px;
     background-color: rgb(250, 212, 209);
 }
 
 #finishCreate {
+    margin-top:10px;
     width:200px;
     background-color: rgb(205, 255, 209);
 }
 
+#exitCreate:hover {
+    background-color: rgb(223, 112, 104);
+}
+
+#finishCreate:hover {
+    background-color: rgb(79, 192, 88);
+}
+
 #question {
     padding-left: 5px;
-    width:300px;
-    height: 100px;
+    width:400px;
+    font-size: 1.3em;
+    font-weight: bold;
+    height: 60px;
     margin:5px;
     border-radius: 10px;
 }
 
 .option {
     padding-left: 5px;
-    width: 150px;
-    height:40px;
+    font-size: 1.1em;
+    font-weight: bold;
+    height: 60px;
+    width: 190px;
+    height:60px;
     margin:5px;
     border-radius: 10px;
 }

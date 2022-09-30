@@ -23,15 +23,17 @@
         <div id="content">
         
             <div id="controls">
-                <input type="submit" id="create" value="+" onclick="createVote()" style="display:none">
-                <input type="submit" id="delete" value="-" onclick="deleteVote()" style="display:none">
+                <input type="submit" class="controlBtn" id="create" value="+" onclick="createVote()" style="display:none">
+                <input type="submit" class="controlBtn" id="delete" value="-" onclick="deleteVote()" style="display:none">
             </div>
 
             <div id="votes">
                 <div class="createVote" id="createVote">
-                    <button class="createBtn" id="exitBtn">Poistu</button>
+                    <button class="createBtn" id="exitCreate" onclick="exitCreation()">Poistu</button>
                     <input type="text" id="question" value="Kysymys">
-
+                    <input class="option" type="text" id="answer1" value="Vaihtoehto 1">
+                    <input class="option" type="text" id="answer2" value="Vaihtoehto 2">
+                    <button class="createBtn" id="finishCreate" onclick="createVote()">Luo äänestys</button>
                 </div>
             </div>
         </div>

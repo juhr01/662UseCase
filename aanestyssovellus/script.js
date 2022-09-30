@@ -35,7 +35,12 @@ function exitCreate() {
 }
 
 function finishCreate() {
+    if (document.querySelector("#question").value == "" || document.querySelector("#option1").value == "" || document.querySelector("#option2").value == "") {
+        alert("Täytäthän kaikki kentät!");
+    } else {
     document.querySelector("#createVote").style.display = "none";
     document.querySelector("#create").style.display = "inline-block";
     document.querySelector("#votes").style.display = "block";
+    }
+
 }

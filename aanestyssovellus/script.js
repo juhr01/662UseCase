@@ -14,6 +14,7 @@ function login() {
         document.querySelector("#logginglabel").style.display = "none";
         document.querySelector("#createBtn").style.display = "inline-block";
         kirjautunut = true;
+        
     }
 }
 
@@ -90,7 +91,7 @@ function getVotes() {
             optionText1.appendChild(optionText2);
             optionElement.appendChild(optionText1);
 
-            
+
 
         })
     })

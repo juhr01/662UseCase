@@ -1,7 +1,7 @@
-const kirjautunut = false;
+
 
 if (window.localStorage.getItem('votes') == null) {
-     var votes = [];
+     let votes = [];
     window.localStorage.setItem('votes', JSON.stringify(votes));
 }
 
@@ -13,7 +13,11 @@ function login() {
         document.querySelector("#kirjautuneena").style.display = "inline-block";
         document.querySelector("#logginglabel").style.display = "none";
         document.querySelector("#createBtn").style.display = "inline-block";
-        kirjautunut = true;
+
+        const delBtns = document.querySelectorAll('#delBtn');
+        delBtns.forEach(i => {
+            i.style.display = 'block';
+        })
         
     }
 }
@@ -25,7 +29,11 @@ function logout() {
     document.querySelector("#kirjautuneena").style.display = "none";
     document.querySelector("#logginglabel").style.display = "inline-block";
     document.querySelector("#createBtn").style.display = "none";
-    kirjautunut = false;
+
+    const delBtns = document.querySelectorAll('#delBtn');
+        delBtns.forEach(i => {
+            i.style.display = 'none';
+        })
 }
 
 function createVote() {
@@ -48,13 +56,13 @@ function finishCreate() {
     document.querySelector("#createBtn").style.display = "inline-block";
     document.querySelector("#votes").style.display = "block";
 
-    let question = document.querySelector("question").value;
-    let option1 = document.querySelector("option1").value;
-    let option2 = document.querySelector("option2").value;
+    let question = document.querySelector("#question").value;
+    let option1 = document.querySelector("#option1").value;
+    let option2 = document.querySelector("#option2").value;
 
     let vote = {voteQuestion:question, voteOptions: [{"optionName:" : option1, "votes" : 0},{"optionName" : option2, "votes" : 0}]};
 
-    let votes = JSON.parse(window.localStorage.getItem('aanestykset'));
+    let votes = JSON.parse(window.localStorage.getItem('votes'));
     votes.push(vote);
     window.localStorage.setItem('votes', JSON.stringify(votes));
     }
@@ -73,6 +81,7 @@ function getVotes() {
         let delBtn = document.createElement('button');
         let delBtnText = document.createTextNode('Poista');
         delBtn.className = "controlBtn";
+        delBtn.id = 'delBtn';
         let voteH2 = document.createElement('h2');
         let voteQuestion = document.createTextNode(vote.question);
         voteH2.appendChild(voteQuestion);
@@ -97,8 +106,55 @@ function getVotes() {
             optionElement.appendChild(h4)
 
             let span = document.createElement('span');
-            span.appendChild(option.votes);
+            span.value = option.votes;
+            let spanValue = document.createTextNode(span.value);
+            span.appendChild(spanValue);
+            optionElement.appendChild(span);
+
+            let p = document.createElement('p');
+            optionElement.appendChild(p);
+            let voteBtn = document.createElement('button');
+            let voteBtnText = document.createTextNode('Äänestä');
+            voteBtn.addEventListener('click', voteClick);
+            voteBtn.appendChild(voteBtnText);
+            voteBtn.dataset.vote = voteNumber;
+            voteBtn.dataset.option = optionNumber;
+            delBtn.dataset.del1 = voteNumber;
+            voteBtn.id = "voteBtn";
+            optionElement.appendChild(voteBtn);
+            optionList.appendChild(optionElement);
+            optionNumber++;
+
         })
+
+        newVoteDiv.appendChild(voteH2);
+        newVoteDiv.appendChild(optionList);
+        document.querySelector('#votes').appendChild(newVoteDiv);
+        voteNumber++;
     })
 }
 
+function vote(voteId, optionId) {
+    let votes = JSON.parse(window.localStorage.getItem('votes'));
+    votes[voteId].options[optionId].votes++;
+    window.localStorage.setItem('votes', JSON.stringify(votes));
+    return votes[voteId].options[optionId].votes;
+}
+
+function voteRemove(del1) {
+    let votes = JSON.parse(window.localStorage.getItem('votes'));
+    votes.splice(del1, 1);
+    window.localStorage.setItem('votes', JSON.stringify(votes));
+    getVotes();
+}
+
+function voteClick(event) {
+    if (event.target.dataset.vote) {
+        let voteSpan = event.target.previousElementSibling.previousElementSibling;
+        voteSpan.innerHTML = vote(event.target.dataset.vote, event.target.dataset.option);
+    }
+}
+
+function delClick(event) {
+    voteRemove(event.target.dataset.del1)
+}

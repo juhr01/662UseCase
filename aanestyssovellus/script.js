@@ -91,8 +91,13 @@ function getVotes() {
             optionText1.appendChild(optionText2);
             optionElement.appendChild(optionText1);
 
+            let h4 = document.createElement('h4');
+            let h4text = document.createTextNode("äänet: ");
+            h4.appendChild(h4text)
+            optionElement.appendChild(h4)
 
-
+            let span = document.createElement('span');
+            span.appendChild(option.votes);
         })
     })
 }

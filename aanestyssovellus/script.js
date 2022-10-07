@@ -25,6 +25,8 @@ function login() {
 
         admin = true;
         getVotes();
+    } else {
+        alert('Salainen sana oli väärä!')
     }
 }
 
@@ -114,10 +116,10 @@ function getVotes() {
 
         vote.voteOptions.forEach(option => {
             let optionInList = document.createElement('li');
-            let optionText1 = document.createElement('h3');
-            let optionText2 = document.createTextNode(option.optionName);
-            optionText1.appendChild(optionText2);
-            optionInList.appendChild(optionText1);
+            let optionTextElement = document.createElement('h3');
+            let optionText = document.createTextNode(option.optionName);
+            optionTextElement.appendChild(optionText);
+            optionInList.appendChild(optionTextElement);
 
             let h4 = document.createElement('h4');
             let h4text = document.createTextNode("äänet: ");

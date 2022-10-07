@@ -1,7 +1,11 @@
-
+let admin = false;
 
 if (window.localStorage.getItem('votes') == null) {
      let votes = [];
+    window.localStorage.setItem('votes', JSON.stringify(votes));
+}
+function clearStorage() {
+    let votes = [];
     window.localStorage.setItem('votes', JSON.stringify(votes));
 }
 
@@ -18,7 +22,9 @@ function login() {
         delBtns.forEach(i => {
             i.style.display = 'block';
         })
-        
+
+        admin = true;
+        getVotes();
     }
 }
 
@@ -34,18 +40,23 @@ function logout() {
         delBtns.forEach(i => {
             i.style.display = 'none';
         })
+
+        admin = false;
+        getVotes();
 }
 
 function createVote() {
     document.querySelector("#createVote").style.display = "block";
     document.querySelector("#createBtn").style.display = "none";
     document.querySelector("#votes").style.display = "none";
+    document.querySelector("#logging").style.display = "none";
 }
 
 function exitCreate() {
     document.querySelector("#createVote").style.display = "none";
     document.querySelector("#createBtn").style.display = "inline-block";
     document.querySelector("#votes").style.display = "block";
+    document.querySelector("#logging").style.display = "block";
 }
 
 function finishCreate() {
@@ -55,12 +66,13 @@ function finishCreate() {
     document.querySelector("#createVote").style.display = "none";
     document.querySelector("#createBtn").style.display = "inline-block";
     document.querySelector("#votes").style.display = "block";
+    document.querySelector("#logging").style.display = "block";
 
     let question = document.querySelector("#question").value;
     let option1 = document.querySelector("#option1").value;
     let option2 = document.querySelector("#option2").value;
 
-    let vote = {voteQuestion:question, voteOptions: [{"optionName:" : option1, "votes" : 0},{"optionName" : option2, "votes" : 0}]};
+    let vote = {voteName:question, voteOptions: [{"optionName:" : option1, "votes" : 0},{"optionName" : option2, "votes" : 0}]};
 
     let votes = JSON.parse(window.localStorage.getItem('votes'));
     votes.push(vote);
@@ -73,6 +85,7 @@ function getVotes() {
     document.querySelector('#votes').innerHTML = "";
     newVoteDiv.innerHTML = "";
     newVoteDiv.className = "votes";
+    newVoteDiv.id = 'newVote';
     newVoteDiv.style.display = "block";
     let votes = JSON.parse(window.localStorage.getItem('votes'));
     var voteNumber = 0;
@@ -82,37 +95,43 @@ function getVotes() {
         let delBtnText = document.createTextNode('Poista');
         delBtn.className = "controlBtn";
         delBtn.id = 'delBtn';
+
+
         let voteH2 = document.createElement('h2');
-        let voteQuestion = document.createTextNode(vote.question);
+        let voteQuestion = document.createTextNode(vote.voteName);
         voteH2.appendChild(voteQuestion);
 
         delBtn.addEventListener('click', delClick);
         delBtn.appendChild(delBtnText);
-        newVoteDiv.appendChild(delBtn);
+
+        if (admin == true) {
+            newVoteDiv.appendChild(delBtn);
+        }
+        
 
         let optionList = document.createElement('ul');
         let optionNumber = 0;
 
         vote.voteOptions.forEach(option => {
-            let optionElement = document.createElement('li');
+            let optionInList = document.createElement('li');
             let optionText1 = document.createElement('h3');
             let optionText2 = document.createTextNode(option.optionName);
             optionText1.appendChild(optionText2);
-            optionElement.appendChild(optionText1);
+            optionInList.appendChild(optionText1);
 
             let h4 = document.createElement('h4');
             let h4text = document.createTextNode("äänet: ");
             h4.appendChild(h4text)
-            optionElement.appendChild(h4)
+            optionInList.appendChild(h4)
 
             let span = document.createElement('span');
             span.value = option.votes;
             let spanValue = document.createTextNode(span.value);
             span.appendChild(spanValue);
-            optionElement.appendChild(span);
+            optionInList.appendChild(span);
 
             let p = document.createElement('p');
-            optionElement.appendChild(p);
+            optionInList.appendChild(p);
             let voteBtn = document.createElement('button');
             let voteBtnText = document.createTextNode('Äänestä');
             voteBtn.addEventListener('click', voteClick);
@@ -121,9 +140,10 @@ function getVotes() {
             voteBtn.dataset.option = optionNumber;
             delBtn.dataset.del1 = voteNumber;
             voteBtn.id = "voteBtn";
-            optionElement.appendChild(voteBtn);
-            optionList.appendChild(optionElement);
+            optionInList.appendChild(voteBtn);
+            optionList.appendChild(optionInList);
             optionNumber++;
+            
 
         })
 
@@ -131,6 +151,7 @@ function getVotes() {
         newVoteDiv.appendChild(optionList);
         document.querySelector('#votes').appendChild(newVoteDiv);
         voteNumber++;
+       
     })
 }
 

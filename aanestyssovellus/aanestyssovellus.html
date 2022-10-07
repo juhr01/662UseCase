@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styling.css">
     </head>
-    <body>
+    <body onload="getVotes()">
         <div id="header">
             <div id="headline">
                 <h1>Äänestyssovellus</h1>
@@ -23,7 +23,7 @@
         <div id="content">
         
             <div id="controls">
-                <input type="submit" class="controlBtn" id="createBtn" value="Luo uusi" onclick="createVote()" style="display:none">
+                <button class="controlBtn" id="createBtn" onclick="createVote()" style="display:none">Luo uusi</button>
                 <div class="createVote" id="createVote" style="display:none">
                     <button class="createBtn" id="exitCreate" onclick="exitCreate()">Poistu</button>
                     <input type="text" id="question" value="Kysymys">

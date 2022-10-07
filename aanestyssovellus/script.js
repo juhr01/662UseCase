@@ -1,13 +1,12 @@
+//Kiitos Henri!
+
 let admin = false;
 
 if (window.localStorage.getItem('votes') == null) {
-     let votes = [];
-    window.localStorage.setItem('votes', JSON.stringify(votes));
-}
-function clearStorage() {
     let votes = [];
     window.localStorage.setItem('votes', JSON.stringify(votes));
 }
+
 
 function login() {
     if (document.querySelector("#adminword").value == "orava") {
@@ -25,6 +24,8 @@ function login() {
 
         admin = true;
         getVotes();
+    } else if (document.querySelector("#adminword").value == "") {
+        alert('Syötä salainen sana ennen kirjautumista!')
     } else {
         alert('Salainen sana oli väärä!')
     }
@@ -39,12 +40,12 @@ function logout() {
     document.querySelector("#createBtn").style.display = "none";
 
     const delBtns = document.querySelectorAll('#delBtn');
-        delBtns.forEach(i => {
-            i.style.display = 'none';
-        })
+    delBtns.forEach(i => {
+        i.style.display = 'none';
+    })
 
-        admin = false;
-        getVotes();
+    admin = false;
+    getVotes();
 }
 
 function createVote() {
@@ -65,20 +66,20 @@ function finishCreate() {
     if (document.querySelector("#question").value == "" || document.querySelector("#option1").value == "" || document.querySelector("#option2").value == "") {
         alert("Täytäthän kaikki kentät!");
     } else {
-    document.querySelector("#createVote").style.display = "none";
-    document.querySelector("#createBtn").style.display = "inline-block";
-    document.querySelector("#votes").style.display = "block";
-    document.querySelector("#logging").style.display = "block";
+        document.querySelector("#createVote").style.display = "none";
+        document.querySelector("#createBtn").style.display = "inline-block";
+        document.querySelector("#votes").style.display = "block";
+        document.querySelector("#logging").style.display = "block";
 
-    let question = document.querySelector("#question").value;
-    let option1 = document.querySelector("#option1").value;
-    let option2 = document.querySelector("#option2").value;
+        let question = document.querySelector("#question").value;
+        let option1 = document.querySelector("#option1").value;
+        let option2 = document.querySelector("#option2").value;
 
-    let vote = {voteName:question, voteOptions: [{"optionName:" : option1, "votes" : 0},{"optionName" : option2, "votes" : 0}]};
+        let vote = { voteName: question, voteOptions: [{ "optionName": option1, "votes": 0 }, { "optionName": option2, "votes": 0 }] };
 
-    let votes = JSON.parse(window.localStorage.getItem('votes'));
-    votes.push(vote);
-    window.localStorage.setItem('votes', JSON.stringify(votes));
+        let votes = JSON.parse(window.localStorage.getItem('votes'));
+        votes.push(vote);
+        window.localStorage.setItem('votes', JSON.stringify(votes));
     }
 
 }
@@ -87,12 +88,16 @@ function getVotes() {
     document.querySelector('#votes').innerHTML = "";
     newVoteDiv.innerHTML = "";
     newVoteDiv.className = "votes";
-    newVoteDiv.id = 'newVote';
     newVoteDiv.style.display = "block";
     let votes = JSON.parse(window.localStorage.getItem('votes'));
     var voteNumber = 0;
 
-    votes.forEach(vote =>{
+    votes.forEach(vote => {
+        let newVoteBox = document.createElement('div');
+        newVoteBox.innerHTML = "";
+        newVoteBox.id = 'newVote';
+        newVoteBox.style.display = "block";
+
         let delBtn = document.createElement('button');
         let delBtnText = document.createTextNode('Poista');
         delBtn.className = "controlBtn";
@@ -107,9 +112,9 @@ function getVotes() {
         delBtn.appendChild(delBtnText);
 
         if (admin == true) {
-            newVoteDiv.appendChild(delBtn);
+            newVoteBox.appendChild(delBtn);
         }
-        
+
 
         let optionList = document.createElement('ul');
         let optionNumber = 0;
@@ -145,28 +150,30 @@ function getVotes() {
             optionInList.appendChild(voteBtn);
             optionList.appendChild(optionInList);
             optionNumber++;
-            
+
 
         })
 
-        newVoteDiv.appendChild(voteH2);
-        newVoteDiv.appendChild(optionList);
+        newVoteBox.appendChild(voteH2);
+        newVoteBox.appendChild(optionList);
+
+        newVoteDiv.appendChild(newVoteBox);
         document.querySelector('#votes').appendChild(newVoteDiv);
         voteNumber++;
-       
+
     })
 }
 
 function vote(voteId, optionId) {
     let votes = JSON.parse(window.localStorage.getItem('votes'));
-    votes[voteId].options[optionId].votes++;
+    votes[voteId].voteOptions[optionId].votes++;
     window.localStorage.setItem('votes', JSON.stringify(votes));
-    return votes[voteId].options[optionId].votes;
+    return votes[voteId].voteOptions[optionId].votes;
 }
 
-function voteRemove(del1) {
+function voteRemove(vote) {
     let votes = JSON.parse(window.localStorage.getItem('votes'));
-    votes.splice(del1, 1);
+    votes.splice(vote, 1);
     window.localStorage.setItem('votes', JSON.stringify(votes));
     getVotes();
 }
@@ -179,5 +186,5 @@ function voteClick(event) {
 }
 
 function delClick(event) {
-    voteRemove(event.target.dataset.del1)
+    voteRemove(event.target.dataset.vote)
 }

@@ -1,13 +1,15 @@
-//Kiitos Henri!
+//Kiitos Henri!!!
 
+//boolean-muuttuja, joka vaihtuu kirjautuessa
 let admin = false;
 
+//tarkistetaan, onko jo välimuistissa votes-arrayta
 if (window.localStorage.getItem('votes') == null) {
     let votes = [];
     window.localStorage.setItem('votes', JSON.stringify(votes));
 }
 
-
+//sisäänkirjautuminen
 function login() {
     if (document.querySelector("#adminword").value == "orava") {
         document.querySelector("#adminword").style.display = "none";
@@ -31,6 +33,7 @@ function login() {
     }
 }
 
+//uloskirjautuminen
 function logout() {
     document.querySelector("#adminword").style.display = "inline-block";
     document.querySelector("#login").style.display = "inline-block";
@@ -48,6 +51,7 @@ function logout() {
     getVotes();
 }
 
+//luo uusi äänestys -ruudun tuominen esiin
 function createVote() {
     document.querySelector("#createVote").style.display = "block";
     document.querySelector("#createBtn").style.display = "none";
@@ -55,6 +59,7 @@ function createVote() {
     document.querySelector("#logging").style.display = "none";
 }
 
+//luo uusi äänestys -ruudun piilottaminen
 function exitCreate() {
     document.querySelector("#createVote").style.display = "none";
     document.querySelector("#createBtn").style.display = "inline-block";
@@ -62,6 +67,7 @@ function exitCreate() {
     document.querySelector("#logging").style.display = "block";
 }
 
+//luo uusi äänestys -ruudun sulkeminen ja arrayn tekeminen syötetyistä arvoista, joka tallennetaan välimuistiin
 function finishCreate() {
     if (document.querySelector("#question").value == "" || document.querySelector("#option1").value == "" || document.querySelector("#option2").value == "") {
         alert("Täytäthän kaikki kentät!");
@@ -83,6 +89,8 @@ function finishCreate() {
     }
 
 }
+
+//getteri, jolla käydään läpi jokainen votes-arrayn arvo, tehdään niille divit ja monen appendchild()-funktion avulla lisätään arrayn arvova käyttäviä elementtejä diviin
 function getVotes() {
     let newVoteDiv = document.createElement('div');
     document.querySelector('#votes').innerHTML = "";
@@ -93,6 +101,7 @@ function getVotes() {
     var voteNumber = 0;
 
     votes.forEach(vote => {
+        //tehdään jokaiselle äänestykselle oma laatikko foreach() avulla
         let newVoteBox = document.createElement('div');
         newVoteBox.innerHTML = "";
         newVoteBox.id = 'newVote';
@@ -111,6 +120,7 @@ function getVotes() {
         delBtn.addEventListener('click', delClick);
         delBtn.appendChild(delBtnText);
 
+        //jos käyttäjä on kirjautunut, näytetään poistonappula
         if (admin == true) {
             newVoteBox.appendChild(delBtn);
         }
@@ -164,6 +174,7 @@ function getVotes() {
     })
 }
 
+//tehdään välimuistissa olevasta votes-arraysta taas käytettävä array-olio, lisätään yksi votes-arvo lisää määriteltyyn arrayn kohtaan, tallennetaan votes taas välimuistiin ja palautetaan arrayn arvot
 function vote(voteId, optionId) {
     let votes = JSON.parse(window.localStorage.getItem('votes'));
     votes[voteId].voteOptions[optionId].votes++;
@@ -171,6 +182,7 @@ function vote(voteId, optionId) {
     return votes[voteId].voteOptions[optionId].votes;
 }
 
+//tehdään välimuistissa olevasta votes-arraysta taas käytettävä array-olio, splice() funktion avulla poistetaan määritelty arvo, tallennetaan taas välimuistiin ja suoritetaan getteri uudestaan sovelluksen päivittämiseksi
 function voteRemove(vote) {
     let votes = JSON.parse(window.localStorage.getItem('votes'));
     votes.splice(vote, 1);
@@ -178,6 +190,7 @@ function voteRemove(vote) {
     getVotes();
 }
 
+//kun äänestysnappulaa klikataan, suoritetaan vote()-funktio klikatun elementin arvoilla
 function voteClick(event) {
     if (event.target.dataset.vote) {
         let voteSpan = event.target.previousElementSibling.previousElementSibling;
@@ -185,6 +198,7 @@ function voteClick(event) {
     }
 }
 
+//kun poistonappulaa klikataan, suoritetaan voteremove()-funktio klikatun elementin arvoilla
 function delClick(event) {
     voteRemove(event.target.dataset.vote)
 }
